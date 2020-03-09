@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <openerp>
+        <data>
+            <record id="view_form_todo_task_inherited" model="ir.ui.view">
+                <field name="name">Lista asistencia form – User extension</field>
+                <field name="model">lista.asistencia</field>
+                <field name="inherit_id" ref="excursiones_app.view_form_todo_task"/>
+                <field name="arch" type="xml">
+                <form>
+                    <field name="active" position="attributes">
+                        <attribute name="invisible">0</attribute>
+                    </field>
+                    <field name="name" position="attributes">
+                        <attribute name="string">Alumno: </attribute>
+                    </field>
+                    <field name="name" position="after">
+                        <field name="user_id" />
+                    </field>
+                    <sheet position="after">
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>    
+                </field>
+            </record>
+            <record id="view_tree_todo_task_inherited" model="ir.ui.view">
+                <field name="name">Lista Asistencia tree – User extension</field>
+                <field name="model">lista.asistencia</field>
+                <field name="inherit_id" ref="excursiones_app.view_tree_todo_task"/>
+                <field name="arch" type="xml">
+                    <field name="name" position="after">
+                        <field name="user_id" />
+                    </field>
+                </field>
+            </record>
+            <record id="view_filter_todo_task_inherited" model="ir.ui.view">
+                <field name="name">Lista Asistencia tree – User extension</field>
+                <field name="model">lista.asistencia</field>
+                <field name="inherit_id" ref="excursiones_app.view_filter_todo_task"/>
+                <field name="arch" type="xml">
+                    <field name="name" position="after">
+                        <field name="user_id" />
+                        <filter name="filter_my_tasks" string="Alumnos asignados" domain="[('is_done','in',[uid,False])]" />
+                        <filter name="filter_not_assigned" string="Alumnos no assignados" domain="[('is_done','=',False)]" />
+                    </field>
+                </field>
+            </record>
+            <act_window
+                id="action_todo_colab_task"
+                name="Lista Asistencia Colaborative"
+                res_model="lista.asistencia"
+                view_mode="tree,form"
+            />
+            <!-- Menu item to open Asistencia list -->
+            <menuitem
+                id="menu_todo_colab_task"
+                name="Lista Asistencia Colaborative"
+                parent="mail.mail_feeds"
+                sequence="30"
+                action="action_todo_colab_task"
+            />
+        </data>
+    </openerp>
